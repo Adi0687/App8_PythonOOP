@@ -1,9 +1,11 @@
 import justpy as jp
 import definition
+from webapp import layout
+from webapp import page
 
-
-class Dictionary:
+class Dictionary(page.Page):
     path = '/dictionary'
+
     # the classmethod passes the class itself and not an instance of the class
     # this is done so that we can reference the class later, if not justPy passes
     # a request class object for routing
@@ -12,7 +14,12 @@ class Dictionary:
         # QuassarPage is a class used for pages  visuals
         # Responsible for what the user sees, HTML and CSS
         wp = jp.QuasarPage(tailwind=True)
-        div = jp.Div(a=wp, classes="bg-gray-200 h-screen")
+
+        lay = layout.DefaultLayout(a=wp)
+
+        container = jp.QPageContainer(a=lay)
+
+        div = jp.Div(a=container, classes="bg-gray-200 h-screen")
         jp.Div(a=div, text="Instant English Dictionary!", classes="text-4xl m-2")
         jp.Div(a=div, text="Get your Definition Instantly!", classes="text-lg m-2")
 
