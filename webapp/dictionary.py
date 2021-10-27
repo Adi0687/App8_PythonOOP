@@ -2,6 +2,8 @@ import justpy as jp
 import definition
 from webapp import layout
 from webapp import page
+import requests
+
 
 class Dictionary(page.Page):
     path = '/dictionary'
@@ -41,7 +43,16 @@ class Dictionary(page.Page):
     # it dosent expect an instance of a class-(like a normal Method)
     # or the class itself -(like a classmethod). It is in the class for organisation
     # issues. It does do something in the class but it also independent!
+    # Accessing the dictionary directly
+    # @staticmethod
+    # def get_definition(widget, msg):
+    #     defined = definition.Definition(widget.value).get()
+    #     widget.outputdiv.text = " ".join(defined)
+
+    # Accessing the dictionary using the API - App9
     @staticmethod
     def get_definition(widget, msg):
-        defined = definition.Definition(widget.value).get()
-        widget.outputdiv.text = " ".join(defined)
+        req = requests.get(f"http://127.0.0.1:8000/api?w={widget.value}")
+        data = req.json()
+
+        widget.outputdiv.text = " ".join(data['definition'])
